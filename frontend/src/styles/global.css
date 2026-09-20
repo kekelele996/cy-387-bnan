@@ -9,3 +9,21 @@ body { margin: 0; font-family: Inter, system-ui, sans-serif; background: #f6f8fb
 .full { width: 100%; }
 .map-panel, .repair { margin: 20px 0; padding: 18px; border: 1px solid #d7dee8; background: white; border-radius: 8px; }
 .repair { display: grid; grid-template-columns: 120px 1fr 120px auto; gap: 12px; align-items: center; }
+
+.topbar { display: flex; justify-content: space-between; align-items: center; padding: 10px 24px; background: #172033; color: #fff; }
+.brand { font-weight: 700; letter-spacing: 1px; }
+.account { display: flex; align-items: center; gap: 10px; }
+.account-select { width: 200px; }
+
+.panel { margin: 24px 0; padding: 20px; border: 1px solid #d7dee8; background: white; border-radius: 8px; }
+.panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.panel-header h2 { margin: 0; }
+.repair-form { max-width: 560px; }
+.hint { color: #8a94a6; margin-left: 12px; }
+.ticket-card { margin-bottom: 14px; }
+.ticket-head { display: flex; justify-content: space-between; align-items: center; }
+.desc { white-space: pre-line; color: #3c4658; }
+.meta { color: #6b7688; font-size: 13px; }
+.trail { margin-top: 12px; padding-left: 4px; }
+.actions { display: flex; gap: 10px; align-items: center; margin: 10px 0; }
+.reassign-select { width: 220px; }

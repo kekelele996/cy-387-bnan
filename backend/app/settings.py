@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 from pathlib import Path
 import dj_database_url
 
@@ -24,7 +25,11 @@ DATABASES = {'default': dj_database_url.config(default=os.getenv('DATABASE_URL',
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
-REST_FRAMEWORK = {'EXCEPTION_HANDLER': 'app.utils.exception_handler.standard_exception_handler'}
+REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'app.utils.exception_handler.standard_exception_handler',
+    'DEFAULT_AUTHENTICATION_CLASSES': ['app.apps.users.authentication.JWTAuthentication'],
+}
+SIMPLE_JWT = {'ACCESS_TOKEN_LIFETIME': timedelta(hours=12)}
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

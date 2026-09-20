@@ -24,18 +24,10 @@
       <PropertyCard v-for="item in filtered" :key="item.id" :item="item" />
     </section>
 
-    <section class="repair">
-      <h2>物业报修</h2>
-      <el-select v-model="faultType">
-        <el-option label="水电" value="水电" />
-        <el-option label="门锁" value="门锁" />
-        <el-option label="管道" value="管道" />
-        <el-option label="家电" value="家电" />
-        <el-option label="其他" value="其他" />
-      </el-select>
-      <el-input v-model="description" placeholder="描述故障情况" />
-      <el-button type="success" @click="submitRepair">提交工单</el-button>
-      <span>{{ notice }}</span>
+    <RepairCenter v-if="session.user?.role === '租客'" />
+    <StaffConsole v-else-if="session.user?.role === '物业人员'" />
+    <section v-else class="panel">
+      <p class="hint">切换到租客账号可提交报修，切换到物业账号可处理工单。</p>
     </section>
   </main>
 </template>
@@ -43,7 +35,10 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import PropertyCard from '../components/PropertyCard.vue';
-import { createRepair, getProperties } from '../api/client';
+import RepairCenter from '../components/RepairCenter.vue';
+import StaffConsole from '../components/StaffConsole.vue';
+import { getProperties } from '../api/client';
+import { session } from '../store/session';
 import type { PropertyItem } from '../types/domain';
 
 const properties = ref<PropertyItem[]>([]);
@@ -51,9 +46,6 @@ const mode = ref('列表视图');
 const region = ref('');
 const maxRent = ref(7000);
 const layout = ref('全部');
-const faultType = ref('水电');
-const description = ref('');
-const notice = ref('等待提交');
 
 onMounted(async () => {
   properties.value = await getProperties();
@@ -65,9 +57,4 @@ const filtered = computed(() => properties.value.filter((item) => {
   const hitLayout = layout.value === '全部' || item.layout === layout.value;
   return hitRegion && hitRent && hitLayout;
 }));
-
-async function submitRepair() {
-  const ticket = await createRepair({ faultType: faultType.value, description: description.value });
-  notice.value = `工单 ${ticket.id} 已提交：${ticket.status}`;
-}
 </script>
