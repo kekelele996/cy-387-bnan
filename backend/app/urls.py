@@ -1,12 +1,9 @@
-from django.urls import path
-from app.apps.properties.views import PropertyListView
-from app.apps.booking.views import BookingCreateView
-from app.apps.contract.views import ContractListView
-from app.apps.repair.views import RepairTicketView
+from django.urls import include, path
 
 urlpatterns = [
-    path('api/properties/', PropertyListView.as_view()),
-    path('api/bookings/', BookingCreateView.as_view()),
-    path('api/contracts/', ContractListView.as_view()),
-    path('api/repairs/', RepairTicketView.as_view()),
+    path('api/auth/', include('app.apps.users.urls')),
+    path('api/properties/', include('app.apps.properties.urls')),
+    path('api/bookings/', include('app.apps.booking.urls')),
+    path('api/contracts/', include('app.apps.contract.urls')),
+    path('api/repairs/', include('app.apps.repair.urls')),
 ]
